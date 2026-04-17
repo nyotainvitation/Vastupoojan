@@ -50,6 +50,11 @@
             overflow-x: hidden;
         }
         
+        a, button {
+            touch-action: manipulation; /* Fixes mobile click delays */
+            -webkit-tap-highlight-color: transparent;
+        }
+
         .texture-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -145,10 +150,14 @@
             border: 1px solid rgba(212, 175, 55, 0.3);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .glass-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 20px 40px -10px rgba(255, 122, 0, 0.2), inset 0 0 0 1px rgba(212, 175, 55, 0.6);
+        
+        /* Desktop only hover to prevent iOS Double-Tap bug */
+        @media (hover: hover) and (pointer: fine) {
+            .glass-card:hover {
+                transform: translateY(-8px) scale(1.02);
+                background: rgba(255, 255, 255, 0.9);
+                box-shadow: 0 20px 40px -10px rgba(255, 122, 0, 0.2), inset 0 0 0 1px rgba(212, 175, 55, 0.6);
+            }
         }
 
         /* Standard Animations */
@@ -256,29 +265,21 @@
                 <svg viewBox="0 0 100 100" class="w-16 h-16 md:w-20 md:h-20 mb-6 text-saffron drop-shadow-xl relative z-10" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
                     <!-- Elegant Circular Frame -->
                     <circle cx="50" cy="50" r="46" stroke-width="2" opacity="0.8"/>
-                    
                     <!-- Ganesha Crown -->
                     <path d="M 35 35 C 35 15, 65 15, 65 35" />
-                    
                     <!-- Left Ear -->
                     <path d="M 35 35 C 15 25, 5 45, 20 60 C 25 65, 30 60, 30 50" />
-                    
                     <!-- Right Ear -->
                     <path d="M 65 35 C 85 25, 95 45, 80 60 C 75 65, 70 60, 70 50" />
-                    
                     <!-- Trunk -->
                     <path d="M 50 35 L 50 70 C 50 85, 70 85, 70 75 C 70 65, 60 65, 60 70" />
-                    
                     <!-- Eyes -->
                     <circle cx="41" cy="42" r="2" fill="currentColor" stroke="none" />
                     <circle cx="59" cy="42" r="2" fill="currentColor" stroke="none" />
-                    
                     <!-- Left Tusk (Broken) -->
                     <line x1="42" y1="52" x2="37" y2="56" />
-                    
                     <!-- Right Tusk -->
                     <line x1="58" y1="52" x2="65" y2="59" />
-                    
                     <!-- Tilak -->
                     <circle cx="50" cy="25" r="2" fill="currentColor" stroke="none" />
                     <path d="M 46 20 L 54 20" stroke-width="2" />
@@ -470,7 +471,7 @@
         <!-- DATE SECTION (Glassmorphism Upgrade) -->
         <section class="reveal relative py-12 px-4 md:px-6 z-20">
             <div class="text-center">
-                <div class="inline-block p-[2px] bg-gradient-to-r from-gold via-saffron to-gold rounded-2xl mb-4 shadow-gold-glow group cursor-default hover:scale-105 transition-transform duration-500">
+                <div class="inline-block p-[2px] bg-gradient-to-r from-gold via-saffron to-gold rounded-2xl mb-4 shadow-gold-glow group cursor-default md:hover:scale-105 transition-transform duration-500">
                     <div class="bg-white/90 backdrop-blur-xl rounded-[14px] px-6 py-4 md:px-10 md:py-5">
                         <p class="font-serif text-2xl sm:text-3xl font-extrabold text-brown tracking-widest">29 APRIL 2026</p>
                         <p class="font-sans text-xs sm:text-sm text-saffron font-bold uppercase tracking-[0.3em] mt-1 md:mt-2">Wednesday</p>
@@ -497,7 +498,7 @@
                     
                     <!-- Muhurat -->
                     <div class="reveal relative flex items-center justify-start md:justify-between md:even:flex-row-reverse group">
-                        <div class="absolute left-6 sm:left-8 md:left-1/2 -translate-x-1/2 w-5 h-5 md:w-6 md:h-6 rounded-full bg-white border-4 border-gold shadow-[0_0_15px_#D4AF37] z-20 transition-all duration-500 group-hover:scale-150 group-hover:bg-saffron group-hover:border-white"></div>
+                        <div class="absolute left-6 sm:left-8 md:left-1/2 -translate-x-1/2 w-5 h-5 md:w-6 md:h-6 rounded-full bg-white border-4 border-gold shadow-[0_0_15px_#D4AF37] z-20 transition-all duration-500 md:group-hover:scale-150 md:group-hover:bg-saffron md:group-hover:border-white"></div>
                         <div class="w-[calc(100%-3.5rem)] sm:w-[calc(100%-5rem)] md:w-[calc(50%-3rem)] ml-14 sm:ml-20 md:ml-0 glass-card p-4 md:p-6 rounded-2xl">
                             <div class="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 mb-2 md:mb-3">
                                 <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-cream flex items-center justify-center text-saffron shadow-inner shrink-0">
@@ -514,7 +515,7 @@
 
                     <!-- Havan -->
                     <div class="reveal relative flex items-center justify-start md:justify-between md:even:flex-row-reverse group">
-                        <div class="absolute left-6 sm:left-8 md:left-1/2 -translate-x-1/2 w-5 h-5 md:w-6 md:h-6 rounded-full bg-white border-4 border-gold shadow-[0_0_15px_#D4AF37] z-20 transition-all duration-500 group-hover:scale-150 group-hover:bg-saffron group-hover:border-white"></div>
+                        <div class="absolute left-6 sm:left-8 md:left-1/2 -translate-x-1/2 w-5 h-5 md:w-6 md:h-6 rounded-full bg-white border-4 border-gold shadow-[0_0_15px_#D4AF37] z-20 transition-all duration-500 md:group-hover:scale-150 md:group-hover:bg-saffron md:group-hover:border-white"></div>
                         <div class="w-[calc(100%-3.5rem)] sm:w-[calc(100%-5rem)] md:w-[calc(50%-3rem)] ml-14 sm:ml-20 md:ml-0 glass-card p-4 md:p-6 rounded-2xl">
                             <div class="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 mb-2 md:mb-3">
                                 <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-cream flex items-center justify-center text-saffron shadow-inner shrink-0">
@@ -531,7 +532,7 @@
 
                     <!-- Griha Pravesh -->
                     <div class="reveal relative flex items-center justify-start md:justify-between md:even:flex-row-reverse group">
-                        <div class="absolute left-6 sm:left-8 md:left-1/2 -translate-x-1/2 w-5 h-5 md:w-6 md:h-6 rounded-full bg-white border-4 border-gold shadow-[0_0_15px_#D4AF37] z-20 transition-all duration-500 group-hover:scale-150 group-hover:bg-saffron group-hover:border-white"></div>
+                        <div class="absolute left-6 sm:left-8 md:left-1/2 -translate-x-1/2 w-5 h-5 md:w-6 md:h-6 rounded-full bg-white border-4 border-gold shadow-[0_0_15px_#D4AF37] z-20 transition-all duration-500 md:group-hover:scale-150 md:group-hover:bg-saffron md:group-hover:border-white"></div>
                         <div class="w-[calc(100%-3.5rem)] sm:w-[calc(100%-5rem)] md:w-[calc(50%-3rem)] ml-14 sm:ml-20 md:ml-0 glass-card p-4 md:p-6 rounded-2xl">
                             <div class="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 mb-2 md:mb-3">
                                 <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-cream flex items-center justify-center text-saffron shadow-inner shrink-0">
@@ -548,7 +549,7 @@
 
                     <!-- Bhojan Samarambh -->
                     <div class="reveal relative flex items-center justify-start md:justify-between md:even:flex-row-reverse group">
-                        <div class="absolute left-6 sm:left-8 md:left-1/2 -translate-x-1/2 w-5 h-5 md:w-6 md:h-6 rounded-full bg-white border-4 border-gold shadow-[0_0_15px_#D4AF37] z-20 transition-all duration-500 group-hover:scale-150 group-hover:bg-saffron group-hover:border-white"></div>
+                        <div class="absolute left-6 sm:left-8 md:left-1/2 -translate-x-1/2 w-5 h-5 md:w-6 md:h-6 rounded-full bg-white border-4 border-gold shadow-[0_0_15px_#D4AF37] z-20 transition-all duration-500 md:group-hover:scale-150 md:group-hover:bg-saffron md:group-hover:border-white"></div>
                         <div class="w-[calc(100%-3.5rem)] sm:w-[calc(100%-5rem)] md:w-[calc(50%-3rem)] ml-14 sm:ml-20 md:ml-0 glass-card p-4 md:p-6 rounded-2xl">
                             <div class="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 mb-2 md:mb-3">
                                 <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-cream flex items-center justify-center text-saffron shadow-inner shrink-0">
@@ -592,15 +593,18 @@
                         </p>
                     </div>
 
-                    <!-- GET DIRECTIONS BUTTON FIX -->
+                    <!-- GET DIRECTIONS BUTTON FIX (MOBILE OPTIMIZED) -->
+                    <!-- Changed hover: classes to md:hover: to prevent iOS double-tap issue, and added pointer-events-none to the inner text span -->
                     <a href="https://www.google.com/maps/dir/?api=1&destination=Swarnim+Sun,+Ghuma-Shela+Road,+Ahmedabad,+Gujarat" 
                        target="_blank" 
                        rel="noopener noreferrer" 
-                       class="relative z-50 cursor-pointer inline-flex items-center justify-center gap-2 bg-gradient-to-r from-saffron to-[#E66A00] text-white px-6 md:px-10 py-3 md:py-4 rounded-full font-sans font-bold text-sm sm:text-base md:text-lg tracking-wide shadow-[0_10px_25px_rgba(255,122,0,0.5)] hover:shadow-[0_15px_35px_rgba(255,122,0,0.7)] hover:-translate-y-1 transition-all duration-300 overflow-hidden group/btn">
+                       style="-webkit-tap-highlight-color: transparent;"
+                       class="relative z-[100] cursor-pointer inline-flex items-center justify-center gap-2 bg-gradient-to-r from-saffron to-[#E66A00] text-white px-6 md:px-10 py-3 md:py-4 rounded-full font-sans font-bold text-sm sm:text-base md:text-lg tracking-wide shadow-[0_10px_25px_rgba(255,122,0,0.5)] md:hover:shadow-[0_15px_35px_rgba(255,122,0,0.7)] md:hover:-translate-y-1 active:scale-95 transition-all duration-300 overflow-hidden group/btn">
                         <span class="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-black pointer-events-none"></span>
+                        <!-- Added pointer-events-none so touches land explicitly on the <a> tag -->
                         <span class="relative flex items-center gap-2 pointer-events-none">
                             Get Directions
-                            <svg class="w-4 h-4 md:w-5 md:h-5 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                            <svg class="w-4 h-4 md:w-5 md:h-5 md:group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                         </span>
                     </a>
                 </div>
@@ -631,8 +635,9 @@
                 <p class="font-serif text-2xl sm:text-3xl md:text-4xl italic mb-8 md:mb-10 leading-snug font-bold drop-shadow-lg">
                     "Experience your invite before your event begins."
                 </p>
-                <a href="https://nyotainvitation.com" target="_blank" rel="noopener noreferrer" class="inline-block bg-gradient-to-r from-gold via-[#F9E596] to-gold text-brown px-6 md:px-8 py-3 md:py-4 rounded-full font-sans font-extrabold text-xs sm:text-sm md:text-base tracking-widest uppercase shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:shadow-[0_0_30px_rgba(212,175,55,0.8)] hover:scale-105 transition-all duration-300 mb-8 md:mb-10">
-                    Create Your Invite with Nyota
+                <!-- Updated hover classes here as well for consistency across mobile -->
+                <a href="https://nyotainvitation.com" target="_blank" rel="noopener noreferrer" class="inline-block bg-gradient-to-r from-gold via-[#F9E596] to-gold text-brown px-6 md:px-8 py-3 md:py-4 rounded-full font-sans font-extrabold text-xs sm:text-sm md:text-base tracking-widest uppercase shadow-[0_0_20px_rgba(212,175,55,0.4)] md:hover:shadow-[0_0_30px_rgba(212,175,55,0.8)] md:hover:scale-105 transition-all duration-300 mb-8 md:mb-10">
+                    <span class="pointer-events-none relative">Create Your Invite with Nyota</span>
                 </a>
                 
                 <div class="flex items-center justify-center gap-3 opacity-80">
