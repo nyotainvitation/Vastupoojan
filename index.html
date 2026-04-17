@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Shubh Vastu Pooja - Surani Family</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anek+Gujarati:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#F8F3E8',
+                        saffron: '#FF7A00',
+                        gold: {
+                            light: '#F9E596',
+                            DEFAULT: '#D4AF37',
+                            dark: '#AA7C11'
+                        },
+                        brown: '#4A3000',
+                        green: '#0A3B1C'
+                    },
+                    fontFamily: {
+                        gujarati: ['"Anek Gujarati"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['Lato', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'premium': '0 20px 40px -15px rgba(74, 48, 0, 0.1)',
+                        'glow': '0 0 25px rgba(255, 122, 0, 0.4)',
+                        'gold-glow': '0 0 30px rgba(212, 175, 55, 0.5)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base & Texture */
+        body {
+            background-color: #F8F3E8;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        
+        .texture-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        /* --- MINDBLOWING EFFECTS --- */
+
+        /* 1. Gold Foil Shimmer Text */
+        .gold-foil-text {
+            background: linear-gradient(
+                to right, 
+                #AA7C11 0%, 
+                #F9E596 20%, 
+                #D4AF37 40%, 
+                #F9E596 60%, 
+                #AA7C11 80%,
+                #D4AF37 100%
+            );
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shine 4s linear infinite;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        /* 2. Temple Doors Opening */
+        .temple-door {
+            transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1);
+            will-change: transform;
+        }
+        .doors-open .door-left { transform: translateX(-100%); }
+        .doors-open .door-right { transform: translateX(100%); }
+
+        /* 3. Divine Aura Rotation */
+        .divine-aura {
+            animation: rotateAura 10s linear infinite, pulseAura 4s ease-in-out infinite alternate;
+        }
+        @keyframes rotateAura { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+        @keyframes pulseAura { 
+            0% { opacity: 0.3; transform: translate(-50%, -50%) scale(0.9); }
+            100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1.1); filter: blur(20px); }
+        }
+
+        /* 4. Marigold Petals Falling */
+        .petal {
+            position: fixed;
+            top: -10%;
+            z-index: 45;
+            pointer-events: none;
+            animation: petalFall linear forwards;
+            will-change: transform, opacity;
+        }
+        @keyframes petalFall {
+            0% { transform: translateY(0) rotate(0deg) scale(0.5); opacity: 0; }
+            10% { opacity: 1; transform: translateY(10vh) rotate(45deg) scale(1); }
+            90% { opacity: 0.9; }
+            100% { transform: translateY(110vh) rotate(720deg) scale(0.8); opacity: 0; }
+        }
+
+        /* 5. Glowing Scroll Timeline */
+        .timeline-track {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: rgba(212, 175, 55, 0.2);
+            border-radius: 4px;
+            z-index: 0;
+        }
+        .timeline-fill {
+            position: absolute;
+            top: 0; left: 0; width: 100%;
+            background: linear-gradient(to bottom, #FF7A00, #F9E596);
+            border-radius: 4px;
+            box-shadow: 0 0 15px #FF7A00, 0 0 30px #D4AF37;
+            transition: height 0.3s ease-out;
+            height: 0%; /* updated via JS */
+        }
+        
+        /* Interactive Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .glass-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 20px 40px -10px rgba(255, 122, 0, 0.2), inset 0 0 0 1px rgba(212, 175, 55, 0.6);
+        }
+
+        /* Standard Animations */
+        @keyframes swing { 0% { transform: rotate(5deg); } 100% { transform: rotate(-5deg); } }
+        @keyframes swing-reverse { 0% { transform: rotate(-4deg); } 100% { transform: rotate(4deg); } }
+        @keyframes flicker {
+            0%, 100% { opacity: 1; transform: scale(1); filter: drop-shadow(0 0 12px rgba(255, 122, 0, 0.8)); }
+            50% { opacity: 0.7; transform: scale(0.9); filter: drop-shadow(0 0 6px rgba(255, 122, 0, 0.4)); }
+            25% { opacity: 0.9; transform: scale(1.05); filter: drop-shadow(0 0 16px rgba(255, 122, 0, 0.9)); }
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
+        @keyframes spin-slow { 100% { transform: rotate(360deg); } }
+
+        .animate-swing { transform-origin: top center; animation: swing 3s ease-in-out infinite alternate; }
+        .animate-swing-delay { transform-origin: top center; animation: swing-reverse 3.5s ease-in-out infinite alternate; }
+        .animate-flicker { transform-origin: bottom center; animation: flicker 2s infinite; }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-spin-slow { animation: spin-slow 120s linear infinite; }
+
+        /* Scroll Reveal Utility */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+            transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Layout Container */
+        .invite-container {
+            width: 100%;
+            background-color: transparent;
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 50px rgba(0,0,0,0.1);
+            overflow-x: hidden;
+        }
+
+        /* Entry Screen specific */
+        #entry-ui {
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-out-up {
+            opacity: 0;
+            transform: translateY(-30px);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="text-brown antialiased selection:bg-saffron selection:text-white bg-[#EFE8DA]">
+
+    <div class="texture-overlay"></div>
+
+    <!-- Audio Element -->
+    <audio id="bg-audio" loop>
+        <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- 1. TEMPLE DOORS (Mindblowing Reveal) -->
+    <div id="door-wrapper" class="fixed inset-0 z-[100] flex pointer-events-none">
+        <!-- Left Door -->
+        <div class="temple-door door-left w-1/2 h-full bg-gradient-to-r from-cream to-[#f1e6d0] border-r-2 border-gold shadow-[10px_0_30px_rgba(0,0,0,0.2)] flex items-center justify-end overflow-hidden relative pointer-events-auto">
+            <!-- Door Decor -->
+            <div class="absolute right-2 top-0 bottom-0 w-4 border-x border-gold/30 flex flex-col justify-between py-10 opacity-60">
+                <div class="w-2 h-2 rounded-full bg-gold mx-auto"></div>
+                <div class="w-2 h-2 rounded-full bg-gold mx-auto"></div>
+                <div class="w-2 h-2 rounded-full bg-gold mx-auto"></div>
+                <div class="w-2 h-2 rounded-full bg-gold mx-auto"></div>
+                <div class="w-2 h-2 rounded-full bg-gold mx-auto"></div>
+            </div>
+            <!-- Half Mandala -->
+            <svg viewBox="0 0 100 200" class="h-[80vh] text-gold/20 -mr-[1px] translate-x-1/2">
+                <path fill="currentColor" d="M0,100 C0,44.8 44.8,0 100,0 V200 C44.8,200 0,155.2 0,100 Z"/>
+                <path stroke="currentColor" fill="none" stroke-width="2" d="M20,100 C20,55.8 55.8,20 100,20 V180 C55.8,180 20,144.2 20,100 Z"/>
+                <circle cx="100" cy="100" r="50" stroke="currentColor" fill="none" stroke-width="2"/>
+            </svg>
+        </div>
+        <!-- Right Door -->
+        <div class="temple-door door-right w-1/2 h-full bg-gradient-to-l from-cream to-[#f1e6d0] border-l-2 border-gold shadow-[-10px_0_30px_rgba(0,0,0,0.2)] flex items-center justify-start overflow-hidden relative pointer-events-auto">
+            <!-- Door Decor -->
+            <div class="absolute left-2 top-0 bottom-0 w-4 border-x border-gold/30 flex flex-col justify-between py-10 opacity-60">
+                <div class="w-2 h-2 rounded-full bg-gold mx-auto"></div>
+                <div class="w-2 h-2 rounded-full bg-gold mx-auto"></div>
+                <div class="w-2 h-2 rounded-full bg-gold mx-auto"></div>
+                <div class="w-2 h-2 rounded-full bg-gold mx-auto"></div>
+                <div class="w-2 h-2 rounded-full bg-gold mx-auto"></div>
+            </div>
+            <!-- Half Mandala -->
+            <svg viewBox="0 0 100 200" class="h-[80vh] text-gold/20 -ml-[1px] -translate-x-1/2">
+                <path fill="currentColor" d="M100,100 C100,44.8 55.2,0 0,0 V200 C55.2,200 100,155.2 100,100 Z"/>
+                <path stroke="currentColor" fill="none" stroke-width="2" d="M80,100 C80,55.8 44.2,20 0,20 V180 C44.2,180 80,144.2 80,100 Z"/>
+                <circle cx="0" cy="100" r="50" stroke="currentColor" fill="none" stroke-width="2"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- ENTRY UI (Sits on top of doors) -->
+    <div id="entry-ui" class="fixed inset-0 z-[110] flex flex-col justify-center items-center pointer-events-none">
+        <div class="animate-float flex flex-col items-center pointer-events-auto bg-white/40 backdrop-blur-md p-10 rounded-3xl border border-gold/40 shadow-gold-glow">
+            <!-- Glowing Ganesha -->
+            <div class="relative">
+                <div class="absolute inset-0 bg-saffron blur-xl opacity-40 rounded-full animate-pulse"></div>
+                <svg width="80" height="80" viewBox="0 0 100 100" class="mb-6 text-saffron drop-shadow-xl relative z-10" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                    <!-- Elegant Circular Frame -->
+                    <circle cx="50" cy="50" r="46" stroke-width="2" opacity="0.8"/>
+                    
+                    <!-- Ganesha Crown -->
+                    <path d="M 35 35 C 35 15, 65 15, 65 35" />
+                    
+                    <!-- Left Ear -->
+                    <path d="M 35 35 C 15 25, 5 45, 20 60 C 25 65, 30 60, 30 50" />
+                    
+                    <!-- Right Ear -->
+                    <path d="M 65 35 C 85 25, 95 45, 80 60 C 75 65, 70 60, 70 50" />
+                    
+                    <!-- Trunk -->
+                    <path d="M 50 35 L 50 70 C 50 85, 70 85, 70 75 C 70 65, 60 65, 60 70" />
+                    
+                    <!-- Eyes -->
+                    <circle cx="41" cy="42" r="2" fill="currentColor" stroke="none" />
+                    <circle cx="59" cy="42" r="2" fill="currentColor" stroke="none" />
+                    
+                    <!-- Left Tusk (Broken) -->
+                    <line x1="42" y1="52" x2="37" y2="56" />
+                    
+                    <!-- Right Tusk -->
+                    <line x1="58" y1="52" x2="65" y2="59" />
+                    
+                    <!-- Tilak -->
+                    <circle cx="50" cy="25" r="2" fill="currentColor" stroke="none" />
+                    <path d="M 46 20 L 54 20" stroke-width="2" />
+                    <path d="M 47 16 L 53 16" stroke-width="2" />
+                </svg>
+            </div>
+            
+            <h1 class="font-serif text-3xl font-bold gold-foil-text mb-2 tracking-wide text-center">Surani Family</h1>
+            <p class="font-sans text-sm text-brown font-bold mb-8 tracking-[0.2em] uppercase">Invites You</p>
+            
+            <button id="open-btn" class="relative group cursor-pointer overflow-hidden rounded-full p-[2px]">
+                <span class="absolute inset-0 bg-gradient-to-r from-saffron via-gold to-saffron animate-[spin_3s_linear_infinite]"></span>
+                <div class="relative bg-cream px-8 py-3 rounded-full flex items-center gap-3 transition-all duration-300 group-hover:bg-white">
+                    <span class="font-serif italic text-lg text-brown group-hover:text-saffron font-bold transition-colors">Open Invitation</span>
+                    <svg class="w-5 h-5 text-saffron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </div>
+            </button>
+            <p class="mt-6 text-xs text-brown/70 font-sans tracking-widest uppercase flex items-center gap-2">
+                <svg class="w-4 h-4 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5 10v4a2 2 0 002 2h2.586l3.707 3.707A.996.996 0 0015 19V5a.996.996 0 00-1.707-.707L9.586 8H7a2 2 0 00-2 2z"></path></svg>
+                Experience with Sound
+            </p>
+        </div>
+    </div>
+
+    <!-- MAIN APP CONTAINER -->
+    <main class="invite-container">
+        
+        <!-- Sacred Background Mandala -->
+        <div class="fixed inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden opacity-[0.03]">
+            <svg class="w-[150vw] h-[150vw] md:w-[100vw] md:h-[100vw] animate-spin-slow text-brown" viewBox="0 0 100 100" fill="currentColor">
+                <!-- Extremely complex looking simple path array for mandala effect -->
+                <path d="M50 0 L55 45 L100 50 L55 55 L50 100 L45 55 L0 50 L45 45 Z"/>
+                <path d="M15 15 L45 45 L85 15 L55 45 L85 85 L55 55 L15 85 L45 55 Z"/>
+                <circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" stroke-width="1"/>
+                <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="0.5" stroke-dasharray="2 2"/>
+                <circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" stroke-width="2"/>
+            </svg>
+        </div>
+
+        <!-- Audio Control -->
+        <button id="mute-btn" class="fixed top-4 right-4 z-50 bg-white/90 backdrop-blur-md p-3 rounded-full shadow-glow text-saffron hover:text-brown transition-colors transform hover:scale-110">
+            <svg id="icon-unmute" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5 10v4a2 2 0 002 2h2.586l3.707 3.707A.996.996 0 0015 19V5a.996.996 0 00-1.707-.707L9.586 8H7a2 2 0 00-2 2z"></path></svg>
+            <svg id="icon-mute" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" clip-rule="evenodd"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path></svg>
+        </button>
+
+        <!-- Petals Container -->
+        <div id="petals-container" class="fixed inset-0 pointer-events-none z-40 overflow-hidden"></div>
+
+        <!-- HERO SECTION -->
+        <section class="relative min-h-[100vh] flex flex-col items-center justify-center pt-20 pb-16 px-6 text-center z-10 overflow-hidden">
+            
+            <!-- Hanging Decor Top -->
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl flex justify-between px-4 md:px-12 pointer-events-none z-20">
+                <!-- Left Bell & Garland -->
+                <div class="relative animate-swing drop-shadow-2xl">
+                    <div class="w-[3px] h-20 bg-gradient-to-b from-saffron to-gold mx-auto shadow-glow"></div>
+                    <!-- Detailed Marigold -->
+                    <div class="absolute top-4 left-1/2 -translate-x-1/2 flex flex-col gap-1">
+                        <div class="w-5 h-5 rounded-full bg-gradient-to-br from-yellow-300 to-saffron shadow-[0_0_10px_#FF7A00] flex items-center justify-center"><div class="w-3 h-3 rounded-full bg-orange-600/50"></div></div>
+                        <div class="w-5 h-5 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 shadow-[0_0_10px_#FF7A00] flex items-center justify-center"><div class="w-3 h-3 rounded-full bg-orange-600/50"></div></div>
+                        <div class="w-5 h-5 rounded-full bg-gradient-to-br from-yellow-300 to-saffron shadow-[0_0_10px_#FF7A00] flex items-center justify-center"><div class="w-3 h-3 rounded-full bg-orange-600/50"></div></div>
+                    </div>
+                    <!-- Bell SVG -->
+                    <svg width="45" height="55" viewBox="0 0 40 50" class="fill-gold drop-shadow-xl mt-4">
+                        <path d="M20 5 C28 5 32 15 32 25 L36 35 L4 35 L8 25 C8 15 12 5 20 5 Z" />
+                        <path d="M16 35 C16 38 18 40 20 40 C22 40 24 38 24 35 Z" />
+                        <circle cx="20" cy="5" r="3" />
+                        <line x1="8" y1="32" x2="32" y2="32" stroke="#AA7C11" stroke-width="2"/>
+                    </svg>
+                </div>
+                
+                <!-- Right Bell & Garland -->
+                <div class="relative animate-swing-delay drop-shadow-2xl">
+                    <div class="w-[3px] h-32 bg-gradient-to-b from-saffron to-gold mx-auto shadow-glow"></div>
+                    <!-- Detailed Marigold -->
+                    <div class="absolute top-10 left-1/2 -translate-x-1/2 flex flex-col gap-1">
+                        <div class="w-5 h-5 rounded-full bg-gradient-to-br from-yellow-300 to-saffron shadow-[0_0_10px_#FF7A00] flex items-center justify-center"><div class="w-3 h-3 rounded-full bg-orange-600/50"></div></div>
+                        <div class="w-5 h-5 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 shadow-[0_0_10px_#FF7A00] flex items-center justify-center"><div class="w-3 h-3 rounded-full bg-orange-600/50"></div></div>
+                        <div class="w-5 h-5 rounded-full bg-gradient-to-br from-yellow-300 to-saffron shadow-[0_0_10px_#FF7A00] flex items-center justify-center"><div class="w-3 h-3 rounded-full bg-orange-600/50"></div></div>
+                        <div class="w-5 h-5 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 shadow-[0_0_10px_#FF7A00] flex items-center justify-center"><div class="w-3 h-3 rounded-full bg-orange-600/50"></div></div>
+                    </div>
+                    <!-- Bell SVG -->
+                    <svg width="40" height="50" viewBox="0 0 40 50" class="fill-gold drop-shadow-xl mt-6">
+                        <path d="M20 5 C28 5 32 15 32 25 L36 35 L4 35 L8 25 C8 15 12 5 20 5 Z" />
+                        <path d="M16 35 C16 38 18 40 20 40 C22 40 24 38 24 35 Z" />
+                        <circle cx="20" cy="5" r="3" />
+                        <line x1="8" y1="32" x2="32" y2="32" stroke="#AA7C11" stroke-width="2"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Divine Invocation -->
+            <div class="reveal bg-white/50 backdrop-blur-sm border border-gold/30 px-6 py-2 rounded-full font-gujarati text-saffron text-sm md:text-base font-bold tracking-widest mb-8 shadow-glow animate-sway">
+                ।। શ્રી ઉમિયા - બહુચરાજી માતાજી ।।
+            </div>
+
+            <!-- Kalash Centerpiece (MINDBLOWING UPGRADE) -->
+            <div class="reveal relative w-40 h-48 mb-8 flex justify-center items-end mt-4">
+                <!-- Rotating Pulsing Aura -->
+                <div class="absolute top-1/2 left-1/2 divine-aura w-40 h-40 bg-gradient-to-tr from-saffron via-gold to-yellow-300 rounded-full mix-blend-multiply filter blur-xl"></div>
+                <div class="absolute top-1/2 left-1/2 divine-aura w-32 h-32 bg-white rounded-full mix-blend-overlay filter blur-md" style="animation-direction: reverse; animation-duration: 7s;"></div>
+                
+                <!-- Detailed Kalash SVG -->
+                <svg viewBox="0 0 100 120" class="w-full h-full drop-shadow-[0_15px_15px_rgba(0,0,0,0.3)] relative z-10">
+                    <!-- Leaves with detail -->
+                    <path d="M50 40 C30 20 10 30 20 50 C25 60 40 55 50 45 Z" fill="#0A3B1C"/>
+                    <path d="M50 40 C30 20 10 30 20 50 C25 60 40 55 50 45 Z" fill="none" stroke="#155D27" stroke-width="1"/>
+                    <path d="M50 40 C70 20 90 30 80 50 C75 60 60 55 50 45 Z" fill="#0A3B1C"/>
+                    <path d="M50 40 C70 20 90 30 80 50 C75 60 60 55 50 45 Z" fill="none" stroke="#155D27" stroke-width="1"/>
+                    <path d="M50 45 C40 25 35 10 50 5 C65 10 60 25 50 45 Z" fill="#155D27"/>
+                    
+                    <!-- Coconut with realistic fiber strokes -->
+                    <ellipse cx="50" cy="35" rx="16" ry="19" fill="#4A3000"/>
+                    <path d="M42 22 L45 32 M48 20 L50 30 M55 22 L53 32 M45 38 L55 38" stroke="#8B5A2B" stroke-width="1.5" stroke-linecap="round"/>
+                    
+                    <!-- Pot Base with deep gradient -->
+                    <path d="M35 55 L65 55 C75 55 85 70 80 90 C75 110 65 115 50 115 C35 115 25 110 20 90 C15 70 25 55 35 55 Z" fill="url(#goldGradientEpic)"/>
+                    <path d="M32 55 L68 55 L70 50 L30 50 Z" fill="#AA7C11"/>
+                    <path d="M30 50 L70 50 L68 47 L32 47 Z" fill="#F9E596"/>
+                    
+                    <!-- Swastik (Glowing) -->
+                    <g stroke="#FF7A00" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" filter="drop-shadow(0 0 2px #fff)">
+                        <line x1="50" y1="70" x2="50" y2="95"/>
+                        <line x1="38" y1="82.5" x2="62" y2="82.5"/>
+                        <line x1="50" y1="70" x2="60" y2="70"/>
+                        <line x1="50" y1="95" x2="40" y2="95"/>
+                        <line x1="38" y1="82.5" x2="38" y2="72.5"/>
+                        <line x1="62" y1="82.5" x2="62" y2="92.5"/>
+                        <circle cx="44" cy="76" r="2" fill="#FF7A00" stroke="none"/>
+                        <circle cx="56" cy="76" r="2" fill="#FF7A00" stroke="none"/>
+                        <circle cx="44" cy="89" r="2" fill="#FF7A00" stroke="none"/>
+                        <circle cx="56" cy="89" r="2" fill="#FF7A00" stroke="none"/>
+                    </g>
+                    
+                    <defs>
+                        <linearGradient id="goldGradientEpic" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#F9E596"/>
+                            <stop offset="25%" stop-color="#D4AF37"/>
+                            <stop offset="75%" stop-color="#AA7C11"/>
+                            <stop offset="100%" stop-color="#4A3000"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+
+            <!-- Titles (Mindblowing Update) -->
+            <div class="reveal mb-8 w-full relative z-20">
+                <h1 class="font-gujarati text-5xl md:text-6xl font-extrabold gold-foil-text mb-4 leading-tight py-2">શુભ વાસ્તુ પૂજા</h1>
+                <p class="font-serif italic text-xl md:text-2xl text-brown font-semibold bg-white/40 backdrop-blur-md inline-block px-6 py-2 rounded-full border border-white/60 shadow-lg">
+                    With divine blessings, we invite you to celebrate our new beginning.
+                </p>
+            </div>
+
+            <!-- Family Name -->
+            <div class="reveal font-serif mt-4 relative z-20">
+                <div class="flex items-center justify-center gap-4 mb-2 opacity-80">
+                    <div class="w-12 h-px bg-gold"></div>
+                    <p class="text-xs uppercase tracking-[0.3em] text-saffron font-bold">Invited By</p>
+                    <div class="w-12 h-px bg-gold"></div>
+                </div>
+                <h2 class="text-4xl md:text-5xl text-brown font-bold tracking-wide drop-shadow-md">Nileshbhai Surani <br><span class="text-2xl md:text-3xl italic font-normal text-saffron block mt-2">& Family</span></h2>
+            </div>
+            
+            <!-- Floating Diyas Left & Right -->
+            <div class="absolute bottom-16 left-[5%] md:left-[15%] lg:left-[25%] animate-float hidden sm:block z-20">
+                <div class="absolute inset-0 bg-saffron rounded-full blur-xl opacity-30 animate-pulse"></div>
+                <svg viewBox="0 0 40 40" class="w-12 h-12 md:w-16 md:h-16 relative drop-shadow-xl">
+                    <path d="M10 25 C10 35 30 35 30 25 Z" fill="url(#goldGradientEpic)"/>
+                    <path d="M20 25 C15 15 20 5 20 5 C20 5 25 15 20 25 Z" fill="#FF7A00" class="animate-flicker"/>
+                    <path d="M20 20 C18 13 20 8 20 8 C20 8 22 13 20 20 Z" fill="#F9E596" class="animate-flicker"/>
+                </svg>
+            </div>
+            <div class="absolute bottom-24 right-[5%] md:right-[15%] lg:right-[25%] animate-float z-20 hidden sm:block" style="animation-delay: 1.5s;">
+                <div class="absolute inset-0 bg-saffron rounded-full blur-xl opacity-30 animate-pulse"></div>
+                <svg viewBox="0 0 40 40" class="w-10 h-10 md:w-14 md:h-14 relative drop-shadow-xl">
+                    <path d="M10 25 C10 35 30 35 30 25 Z" fill="url(#goldGradientEpic)"/>
+                    <path d="M20 25 C15 15 20 5 20 5 C20 5 25 15 20 25 Z" fill="#FF7A00" class="animate-flicker"/>
+                    <path d="M20 20 C18 13 20 8 20 8 C20 8 22 13 20 20 Z" fill="#F9E596" class="animate-flicker"/>
+                </svg>
+            </div>
+            
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-4 left-1/2 -translate-x-1/2 animate-bounce opacity-70 z-20 bg-white/50 rounded-full p-2 backdrop-blur-sm border border-gold/20 shadow-lg">
+                <svg class="w-6 h-6 text-saffron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+            </div>
+
+        </section>
+
+        <!-- DATE SECTION (Glassmorphism Upgrade) -->
+        <section class="reveal relative py-12 px-6 z-20">
+            <div class="text-center">
+                <div class="inline-block p-[2px] bg-gradient-to-r from-gold via-saffron to-gold rounded-2xl mb-4 shadow-gold-glow group cursor-default hover:scale-105 transition-transform duration-500">
+                    <div class="bg-white/90 backdrop-blur-xl rounded-[14px] px-10 py-5">
+                        <p class="font-serif text-3xl font-extrabold text-brown tracking-widest">29 APRIL 2026</p>
+                        <p class="font-sans text-sm text-saffron font-bold uppercase tracking-[0.3em] mt-2">Wednesday</p>
+                    </div>
+                </div>
+                <p class="font-gujarati text-xl text-green font-bold drop-shadow-md bg-white/30 inline-block px-4 py-1 rounded-full backdrop-blur-sm mt-2 border border-white/50">વૈશાખ સુદ ૧૩, સંવત ૨૦૮૨</p>
+            </div>
+        </section>
+
+        <!-- EVENT DETAILS (TIMELINE - Mindblowing Interactive Glow) -->
+        <section class="reveal relative py-20 px-6 z-20" id="timeline-section">
+            <div class="text-center mb-16 relative">
+                <h3 class="font-serif text-4xl md:text-5xl font-bold gold-foil-text italic mb-4">Auspicious Programs</h3>
+                <div class="w-32 h-[3px] bg-gradient-to-r from-transparent via-saffron to-transparent mx-auto"></div>
+            </div>
+
+            <!-- Scroll Timeline Track -->
+            <div class="relative max-w-4xl mx-auto">
+                <div class="timeline-track md:left-1/2 md:-translate-x-1/2 left-8 translate-x-0 hidden md:block">
+                    <div class="timeline-fill" id="timeline-progress"></div>
+                </div>
+
+                <div class="space-y-16 relative">
+                    
+                    <!-- Muhurat -->
+                    <div class="reveal relative flex items-center justify-start md:justify-between md:even:flex-row-reverse group">
+                        <div class="absolute left-8 md:left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-white border-4 border-gold shadow-[0_0_15px_#D4AF37] z-20 transition-all duration-500 group-hover:scale-150 group-hover:bg-saffron group-hover:border-white"></div>
+                        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] ml-16 md:ml-0 glass-card p-5 rounded-2xl">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="w-10 h-10 rounded-full bg-cream flex items-center justify-center text-saffron shadow-inner">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z"/></svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-gujarati text-xl font-bold text-brown">મુહૂર્ત</h4>
+                                    <span class="text-xs text-gold-dark font-sans uppercase tracking-widest font-bold">(Muhurat)</span>
+                                </div>
+                            </div>
+                            <p class="font-sans text-lg text-saffron font-extrabold bg-white/50 inline-block px-3 py-1 rounded-md shadow-sm border border-gold/20">Morning 6:30 AM</p>
+                        </div>
+                    </div>
+
+                    <!-- Havan -->
+                    <div class="reveal relative flex items-center justify-start md:justify-between md:even:flex-row-reverse group">
+                        <div class="absolute left-8 md:left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-white border-4 border-gold shadow-[0_0_15px_#D4AF37] z-20 transition-all duration-500 group-hover:scale-150 group-hover:bg-saffron group-hover:border-white"></div>
+                        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] ml-16 md:ml-0 glass-card p-5 rounded-2xl">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="w-10 h-10 rounded-full bg-cream flex items-center justify-center text-saffron shadow-inner">
+                                    <svg class="w-6 h-6 animate-flicker" fill="currentColor" viewBox="0 0 24 24"><path d="M17.5 11c0 2.5-1.5 4.5-3.5 5.5V20h-4v-3.5C8 15.5 6.5 13.5 6.5 11c0-2 1-4 3-5.5.5-.5.5-1.5 0-2-1.5-1.5-2-3.5-2-5.5 2 0 4 1 5.5 2.5.5.5 1.5.5 2 0 1.5-1.5 3.5-2.5 5.5-2.5 0 2-.5 4-2 5.5-.5.5-.5 1.5 0 2 2 1.5 3 3.5 3 5.5z"/></svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-gujarati text-xl font-bold text-brown">હવન</h4>
+                                    <span class="text-xs text-gold-dark font-sans uppercase tracking-widest font-bold">(Havan)</span>
+                                </div>
+                            </div>
+                            <p class="font-sans text-lg text-saffron font-extrabold bg-white/50 inline-block px-3 py-1 rounded-md shadow-sm border border-gold/20">7:00 AM</p>
+                        </div>
+                    </div>
+
+                    <!-- Griha Pravesh -->
+                    <div class="reveal relative flex items-center justify-start md:justify-between md:even:flex-row-reverse group">
+                        <div class="absolute left-8 md:left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-white border-4 border-gold shadow-[0_0_15px_#D4AF37] z-20 transition-all duration-500 group-hover:scale-150 group-hover:bg-saffron group-hover:border-white"></div>
+                        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] ml-16 md:ml-0 glass-card p-5 rounded-2xl">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="w-10 h-10 rounded-full bg-cream flex items-center justify-center text-saffron shadow-inner">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-gujarati text-xl font-bold text-brown">ગૃહ પ્રવેશ</h4>
+                                    <span class="text-xs text-gold-dark font-sans uppercase tracking-widest font-bold">(Griha Pravesh)</span>
+                                </div>
+                            </div>
+                            <p class="font-sans text-lg text-saffron font-extrabold bg-white/50 inline-block px-3 py-1 rounded-md shadow-sm border border-gold/20">8:00 AM</p>
+                        </div>
+                    </div>
+
+                    <!-- Bhojan Samarambh -->
+                    <div class="reveal relative flex items-center justify-start md:justify-between md:even:flex-row-reverse group">
+                        <div class="absolute left-8 md:left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-white border-4 border-gold shadow-[0_0_15px_#D4AF37] z-20 transition-all duration-500 group-hover:scale-150 group-hover:bg-saffron group-hover:border-white"></div>
+                        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] ml-16 md:ml-0 glass-card p-5 rounded-2xl">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="w-10 h-10 rounded-full bg-cream flex items-center justify-center text-saffron shadow-inner">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"/></svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-gujarati text-xl font-bold text-brown">ભોજન સમારંભ</h4>
+                                    <span class="text-xs text-gold-dark font-sans uppercase tracking-widest font-bold">(Lunch)</span>
+                                </div>
+                            </div>
+                            <p class="font-sans text-lg text-saffron font-extrabold bg-white/50 inline-block px-3 py-1 rounded-md shadow-sm border border-gold/20">12:00 PM Onwards</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- LOCATION SECTION -->
+        <section class="reveal relative py-20 px-6 z-20">
+            <div class="glass-card rounded-[2rem] p-8 md:p-16 text-center relative overflow-hidden group max-w-4xl mx-auto">
+                
+                <!-- Glowing Orb Behind Card -->
+                <div class="absolute inset-0 bg-gradient-to-br from-white/80 to-cream/80 backdrop-blur-xl z-0"></div>
+                
+                <div class="relative z-10">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-gold-glow text-saffron animate-bounce border-2 border-gold/30">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    </div>
+                    
+                    <h3 class="font-serif text-3xl font-bold gold-foil-text italic mb-6">Venue</h3>
+                    
+                    <p class="font-sans text-xl text-brown font-bold leading-relaxed mb-3 drop-shadow-sm">
+                        B-604, Swarnim Sun,<br>
+                        Ghuma-Shela Road,<br>
+                        Ahmedabad
+                    </p>
+                    <div class="bg-saffron/10 inline-block px-4 py-2 rounded-lg border border-saffron/20 mb-8">
+                        <p class="font-sans text-sm font-bold text-saffron">
+                            Landmark: Opp. D.K Fast Food
+                        </p>
+                    </div>
+
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=Swarnim+Sun,+Ghuma-Shela+Road,+Ahmedabad,+Gujarat" target="_blank" rel="noopener noreferrer" class="relative inline-flex items-center justify-center gap-2 bg-gradient-to-r from-saffron to-[#E66A00] text-white px-10 py-4 rounded-full font-sans font-bold text-lg tracking-wide shadow-[0_10px_25px_rgba(255,122,0,0.5)] hover:shadow-[0_15px_35px_rgba(255,122,0,0.7)] hover:-translate-y-1 transition-all duration-300 overflow-hidden group/btn">
+                        <span class="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-black"></span>
+                        <span class="relative flex items-center gap-2">
+                            Get Directions
+                            <svg class="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- BANANA LEAVES BOTTOM DECOR -->
+        <div class="relative h-32 md:h-56 z-10 pointer-events-none mt-10">
+            <!-- Left Leaf -->
+            <svg class="absolute bottom-0 left-0 w-40 h-40 md:w-72 md:h-72 opacity-90 drop-shadow-2xl" viewBox="0 0 100 100">
+                <path d="M0 100 C 0 50, 40 20, 80 10 C 90 40, 50 80, 0 100 Z" fill="#0A3B1C"/>
+                <path d="M0 100 C 0 60, 30 30, 60 20 C 70 50, 40 80, 0 100 Z" fill="#155D27"/>
+                <path d="M0 100 L 80 10" stroke="#062511" stroke-width="2"/>
+                <path d="M20 90 L 40 50 M40 85 L 60 40 M10 70 L 25 35" stroke="#062511" stroke-width="1" opacity="0.5"/>
+            </svg>
+            <!-- Right Leaf -->
+            <svg class="absolute bottom-0 right-0 w-40 h-40 md:w-72 md:h-72 opacity-90 drop-shadow-2xl" viewBox="0 0 100 100" transform="scale(-1, 1)">
+                <path d="M0 100 C 0 50, 40 20, 80 10 C 90 40, 50 80, 0 100 Z" fill="#0A3B1C"/>
+                <path d="M0 100 C 0 60, 30 30, 60 20 C 70 50, 40 80, 0 100 Z" fill="#155D27"/>
+                <path d="M0 100 L 80 10" stroke="#062511" stroke-width="2"/>
+                <path d="M20 90 L 40 50 M40 85 L 60 40 M10 70 L 25 35" stroke="#062511" stroke-width="1" opacity="0.5"/>
+            </svg>
+        </div>
+
+        <!-- CTA SECTION (NYOTA PREMIUM) -->
+        <section class="relative bg-gradient-to-b from-green to-[#05200F] text-cream py-24 px-6 text-center z-20 border-t-4 border-saffron shadow-[0_-10px_30px_rgba(255,122,0,0.2)]">
+            <div class="max-w-2xl mx-auto relative z-10">
+                <p class="font-serif text-3xl md:text-4xl italic mb-10 leading-snug font-bold drop-shadow-lg">
+                    "Experience your invite before your event begins."
+                </p>
+                <a href="#" class="inline-block bg-gradient-to-r from-gold via-[#F9E596] to-gold text-brown px-8 py-4 rounded-full font-sans font-extrabold text-sm md:text-base tracking-widest uppercase shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:shadow-[0_0_30px_rgba(212,175,55,0.8)] hover:scale-105 transition-all duration-300 mb-10">
+                    Create Your Invite with Nyota
+                </a>
+                
+                <div class="flex items-center justify-center gap-3 opacity-80">
+                    <div class="w-12 h-px bg-gradient-to-r from-transparent to-gold"></div>
+                    <p class="font-sans text-xs tracking-[0.3em] uppercase text-gold font-bold">Made by Nyota</p>
+                    <div class="w-12 h-px bg-gradient-to-l from-transparent to-gold"></div>
+                </div>
+            </div>
+            <!-- Subtle background particles in footer -->
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' viewBox=\'0 0 20 20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Ccircle cx=\'2\' cy=\'2\' r=\'1\' fill=\'%23D4AF37\' opacity=\'0.2\'/%3E%3C/svg%3E')] z-0"></div>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- 1. Temple Door & Entry Logic (Mindblowing Reveal) ---
+            const doorWrapper = document.getElementById('door-wrapper');
+            const entryUi = document.getElementById('entry-ui');
+            const openBtn = document.getElementById('open-btn');
+            const bgAudio = document.getElementById('bg-audio');
+            const muteBtn = document.getElementById('mute-btn');
+            const iconMute = document.getElementById('icon-mute');
+            const iconUnmute = document.getElementById('icon-unmute');
+
+            let isPlaying = false;
+            bgAudio.volume = 0.4;
+
+            openBtn.addEventListener('click', () => {
+                // Fade out text UI
+                entryUi.classList.add('fade-out-up');
+                
+                // Slide doors open
+                setTimeout(() => {
+                    doorWrapper.classList.add('doors-open');
+                }, 200);
+
+                // Audio Playback
+                bgAudio.play().then(() => {
+                    isPlaying = true;
+                    updateMuteIcon();
+                }).catch(err => {
+                    console.log("Auto-play prevented.", err);
+                    updateMuteIcon();
+                });
+
+                // Start Petals AFTER doors open for performance and impact
+                setTimeout(() => {
+                    startPetalRain();
+                    doorWrapper.style.display = 'none'; // remove from DOM computation
+                }, 1800);
+
+                // Trigger Scroll Reveals
+                setTimeout(() => {
+                    document.querySelectorAll('.reveal').forEach(el => {
+                        const rect = el.getBoundingClientRect();
+                        if(rect.top < window.innerHeight) {
+                            el.classList.add('active');
+                        }
+                    });
+                }, 1000);
+            });
+
+            // Audio Controls
+            muteBtn.addEventListener('click', () => {
+                if (isPlaying) { bgAudio.pause(); isPlaying = false; } 
+                else { bgAudio.play(); isPlaying = true; }
+                updateMuteIcon();
+            });
+            function updateMuteIcon() {
+                if (isPlaying) { iconUnmute.classList.remove('hidden'); iconMute.classList.add('hidden'); } 
+                else { iconUnmute.classList.add('hidden'); iconMute.classList.remove('hidden'); }
+            }
+            updateMuteIcon();
+
+
+            // --- 2. Scroll Reveal Animation ---
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { root: null, threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+            document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+
+            // --- 3. Glowing Timeline Scroll Effect ---
+            const timelineSection = document.getElementById('timeline-section');
+            const timelineProgress = document.getElementById('timeline-progress');
+            
+            window.addEventListener('scroll', () => {
+                if(!timelineProgress || !timelineSection) return;
+                
+                // Calculate how much of the timeline section has been scrolled
+                const rect = timelineSection.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                
+                // Start filling when top of section hits middle of screen
+                const startPoint = windowHeight / 2;
+                // Finish filling when bottom of section hits middle of screen
+                const endPoint = startPoint - rect.height;
+                
+                if (rect.top <= startPoint) {
+                    let progress = ((startPoint - rect.top) / rect.height) * 100;
+                    // Clamp between 0 and 100
+                    progress = Math.max(0, Math.min(100, progress));
+                    timelineProgress.style.height = `${progress}%`;
+                } else {
+                    timelineProgress.style.height = `0%`;
+                }
+            });
+
+
+            // --- 4. Falling Petals Particle System (Mindblowing Visuals) ---
+            const petalsContainer = document.getElementById('petals-container');
+            const petalColors = ['#FF7A00', '#FFA500', '#FF4500', '#FFD700', '#D4AF37']; // Orange, Gold, Red-Orange
+            
+            function createPetal() {
+                if(document.hidden) return; // Don't create if tab is inactive
+                
+                const petal = document.createElement('div');
+                petal.classList.add('petal');
+                
+                // Randomize properties
+                const size = Math.random() * 15 + 10; // 10px to 25px
+                const left = Math.random() * 100; // 0 to 100vw
+                const animDuration = Math.random() * 5 + 7; // 7s to 12s fall time
+                const delay = Math.random() * 2;
+                const color = petalColors[Math.floor(Math.random() * petalColors.length)];
+                
+                // Create SVG Petal shape
+                petal.innerHTML = `
+                    <svg width="${size}" height="${size}" viewBox="0 0 20 20" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); transform: rotate(${Math.random() * 360}deg);">
+                        <path d="M10,0 C15,5 20,10 10,20 C0,10 5,5 10,0 Z" fill="${color}" opacity="${Math.random() * 0.4 + 0.6}"/>
+                    </svg>
+                `;
+
+                petal.style.left = `${left}vw`;
+                petal.style.animationDuration = `${animDuration}s`;
+                petal.style.animationDelay = `${delay}s`;
+                
+                petalsContainer.appendChild(petal);
+                
+                // Clean up DOM after animation
+                setTimeout(() => {
+                    if(petal.parentNode) petal.parentNode.removeChild(petal);
+                }, (animDuration + delay) * 1000);
+            }
+
+            let petalInterval;
+            function startPetalRain() {
+                // Initial burst
+                for(let i=0; i<15; i++) setTimeout(createPetal, Math.random() * 2000);
+                // Continuous rain
+                petalInterval = setInterval(createPetal, 400);
+            }
+        });
+    </script>
+</body>
+</html>
